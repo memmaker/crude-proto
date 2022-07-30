@@ -1,0 +1,100 @@
+[{
+    "name": "topics",
+    "indexes": [
+        {
+            "keys": {"name": 1},
+            "options": {"unique": true}
+        }
+    ],
+    "fts_index_fields": ["name"],
+    "search_fields": ["name"],
+    "display_fields": ["name"],
+    "fields": [
+        {
+            "name": "name",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "status",
+            "type": "text"
+        }
+    ],
+    "foreign_relations": [
+        {
+            "name": "threads",
+            "related_model": "threads",
+            "related_field": "related_topic"
+        }
+    ]
+},
+{
+    "name": "threads",
+    "display_fields": ["name"],
+    "indexes": [
+        {
+            "keys": {"name": 1, "next_step": 1}
+        }
+    ],
+    "fts_index_fields": ["name", "next_step"],
+    "search_fields": ["name", "next_step"],
+    "fields": [
+        {
+            "name": "name",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "next_step",
+            "type": "text"
+        },
+        {
+            "name": "related_topic",
+            "type": "related",
+            "related_model": "topics",
+            "required": true
+        }
+    ],
+    "foreign_relations": [
+        {
+            "name": "data_points",
+            "related_model": "informations",
+            "related_field": "related_thread"
+        }
+    ]
+},
+{
+    "name": "informations",
+    "display_fields": ["title", "source"],
+    "indexes": [
+        {
+            "keys": {"title": 1, "descriptions": 1, "source": 1}
+        }
+    ],
+    "fts_index_fields": ["title", "descriptions", "source"],
+    "search_fields": ["name", "descriptions", "source"],
+    "fields": [
+        {
+            "name": "title",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "descriptions",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "source",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "related_thread",
+            "type": "related",
+            "related_model": "threads",
+            "required": true
+        }
+    ]
+}]
+

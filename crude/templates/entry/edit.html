@@ -1,0 +1,11 @@
+{% extends "main.html" %}
+{% block title %}Edit {{ model_name }}{% endblock %}
+{% block head %}
+    <script src="{{ url_for('static', filename='js/tagify.min.js') }}"></script>
+    <link href="{{ url_for('static', filename='css/tagify.css') }}" rel="stylesheet"/>
+{% endblock %}
+{% block content %}
+    <h3>Edit {{ model_name }}</h3>
+    {% import 'macros/entry.html' as m_entry -%}
+    {{ m_entry.edit(render_tag, model, entry, entry_id) }}
+{% endblock %}

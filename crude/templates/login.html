@@ -1,0 +1,13 @@
+{% extends "main.html" %}
+{% block title %}Login{% endblock %}
+{% block head %}
+    <script type="module" src="{{ url_for('static', filename='js/login.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div class="centered">
+    <h1>I am crude</h1>
+    {% if 'wallet' not in session %}
+    <login-button></login-button>
+    {% endif %}
+</div>
+{% endblock %}

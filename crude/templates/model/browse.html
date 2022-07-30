@@ -1,0 +1,20 @@
+{% extends "main.html" %}
+{% block title %}Create{% endblock %}
+{% block content %}
+    <h1>List Models</h1>
+    <a href="{{ url_for('model.edit') }}">Create</a>
+    <table>
+        <thead><tr><th>Name</th><th>Actions</th></tr></thead>
+        <tbody>
+            {% for model in models %}
+            <tr>
+                <td>{{ model.name }}</td>
+                <td>
+                    <a href="{{ url_for('model.edit', model_name=model.name) }}">Edit</a>
+                    <a href="{{ url_for('model.delete', model_name=model.name) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

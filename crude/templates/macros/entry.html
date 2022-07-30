@@ -1,0 +1,93 @@
+{% macro display(render_entry, model, entry) -%}
+<table>
+    <tbody>
+        {% for field in model.fields %}
+        <tr>
+            <td>{{ field.name }}</td>
+            {% if 'funcs' in field %}
+                {% import 'fields/' + field.type + '.html' as field_macros -%}
+                <td>{{ field_macros.render_read_field(field, entry) }}</td>
+            {% elif field.type == 'related' %}
+                <td>
+                    {% for related_entry in entry[field.name] %}
+                        <a href="{{ url_for('entry.read', model_name=field.related_model.name, entry_id=related_entry._id) }}">{{ render_entry(field.related_model, related_entry) }}</a>
+                    {% endfor %}
+                </td>
+            {% else %} <td>{{ entry[field.name] }}</td> {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{%- endmacro -%}
+
+{% macro edit(render_tag, model, entry, entry_id) -%}
+    <form action="{{ url_for('entry.save', model_name=model.name, entry_id=entry_id) }}" method="post">
+    <!-- iterate over all the fields in the model -->
+    {% for field in model.fields %}
+        <p>
+
+            <label for="{{ field.name }}">{{ field.name }}:</label>
+            <!-- we need to pass: field_definition, entry, autofocus -->
+            {% if 'funcs' in field %}
+                {% import 'fields/' + field.type + '.html' as field_macros -%}
+                {{ field_macros.render_edit_field(field, entry, loop.index0 == 0) }}
+            {% elif field.type == 'related' and entry %}
+                <input {% if loop.index0 == 0 %} autofocus {% endif %} type="{{ field.type if 'type' in field else 'text'}}" name="{{ field.name }}" id="{{ field.name }}" value="{% for related_entry in entry[field.name] %} {{ '[' if loop.first else '' }} {{ render_tag(field.related_model, related_entry) }} {{ ',' if not loop.last else ']' }} {% endfor %}" />
+            {% else %}
+                <input {% if loop.index0 == 0 %} autofocus {% endif %} type="{{ field.type if 'type' in field else 'text'}}" name="{{ field.name }}" id="{{ field.name }}" {% if entry %} value="{{ entry[field.name] }}" {% endif %} />
+            {% endif %}
+        </p>
+    {% endfor %}
+    <p>
+        <button type="submit">Submit</button>
+    </p>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    </form>
+    <script src="{{ url_for('static', filename='js/tag_input.js') }}"></script>
+    <script type="text/javascript">
+        {% for field in model.fields %}
+            {% if 'type' in field and field.type == 'related' %}
+                const {{ field.name }}_tagify = init_tagify(document.querySelector('input#{{ field.name }}'), '{{ field.related_model.name }}');
+            {% endif %}
+        {% endfor %}
+    </script>
+{%- endmacro -%}
+
+
+{% macro list(model, entries) -%}
+    <table role="grid">
+        <thead>
+            <tr>
+                <!-- iterate over all the fields in the model -->
+                {% for field in model.fields %}
+                    <th>{{ field.name }}</th>
+                {% endfor %}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+            <tr>
+                <!-- iterate over all the fields in the model -->
+                {% for field in model.fields %}
+                    {% if 'funcs' in field %}
+                        <td>
+                            {% import 'fields/' + field.type + '.html' as field_macros -%}
+                            {{ field_macros.render_list_field(field, entry) }}
+                        </td>
+                    {% elif field.type == 'related' and entry[field.name] %}
+                        <td>({{ entry[field.name]|length }} docs)</td>
+                    {% else %}
+                        <td>{{ entry[field.name] }}</td>
+                    {% endif %}
+                {% endfor %}
+                <td>
+                    <a href="{{ url_for('entry.read', model_name=model.name, entry_id=entry._id) }}">Read</a>
+                    <a href="{{ url_for('entry.edit', model_name=model.name, entry_id=entry._id) }}">Edit</a>
+                    <a href="{{ url_for('entry.delete', model_name=model.name, entry_id=entry._id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{%- endmacro -%}

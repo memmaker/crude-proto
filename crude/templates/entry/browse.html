@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+{% block title %}Browse{% endblock %}
+{% block content %}
+    <a style="float: right" role="button" href="{{ url_for('entry.edit', model_name=model_name) }}">Create</a>
+    <h3>Browse {{ model_name }}: {{ doc_count }} docs - page {{current_page}} of {{page_count}}</h3>
+    <div id="prev_next">
+        {% if current_page > 1 %}
+            <a href="{{ url_for('entry.browse', model_name=model_name, page_number=current_page-1, f=filter_expression) }}">Previous</a>
+        {% endif %}
+        {% if current_page < page_count %}
+            <a href="{{ url_for('entry.browse', model_name=model_name, page_number=current_page+1, f=filter_expression) }}">Next</a>
+        {% endif %}
+    </div>
+    <div id="filter">
+        <form action="{{ url_for('entry.browse', model_name=model_name) }}" method="get">
+            <input autofocus type="search" name="f" value="{{ filter_expression }}" />
+            <button type="submit" hidden>Submit</button>
+        </form>
+    </div>
+    {% import 'macros/entry.html' as m_entry -%}
+    {{ m_entry.list(model, entries) }}
+    {% if page_count > 1 %}
+        <div id="pagination">
+            {% for page in range(1, page_count + 1) %}
+                <a href="{{ url_for('entry.browse', model_name=model_name, page_number=page, f=filter_expression) }}">{{ '[' + page|string + ']' if page == current_page else page }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

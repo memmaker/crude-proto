@@ -1,0 +1,15 @@
+{% extends "main.html" %}
+{% block title %}Create{% endblock %}
+{% block content %}
+    <h1>Create</h1>
+    <form action="{{ url_for('model.save') }}" method="post">
+        <p>
+            <label for="model">Content:</label>
+            <textarea name="model" id="model" rows="10" cols="40">{{ model }}</textarea>
+        </p>
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    </form>
+{% endblock %}

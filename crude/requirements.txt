@@ -1,0 +1,11 @@
+pyuwsgi
+flask==2.1.3
+flask_cors
+requests==2.28.1
+web3==5.30.0
+siwe==2.0.0
+pytz==2022.1
+pymongo==4.2.0
+Flask-WTF
+Jinja2==3.1.2
+Werkzeug==2.2.1

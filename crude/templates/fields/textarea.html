@@ -1,0 +1,19 @@
+{% macro render_edit_field(field, entry, autofocus) -%}
+    <textarea rows="{{field.rows if 'rows' in field else 7}}" name="{{ field.name }}" id="{{ field.name }}" {% if autofocus %} autofocus {% endif %}>{% if entry %}{{ entry[field.name] }}{% endif %}</textarea>
+{%- endmacro -%}
+
+{% macro render_read_field(field, entry) -%}
+    {% if 'preformatted' in field and field.preformatted %}
+        <pre style="margin: 0">{{ entry[field.name] }}</pre>
+    {% else %}
+        <p style="margin: 0">{{ entry[field.name] }}</p>
+    {% endif %}
+{%- endmacro -%}
+
+{% macro render_list_field(field, entry) -%}
+    {% if 'preformatted' in field and field.preformatted %}
+        <pre style="margin: 0">{{ entry[field.name]|truncate(40, false, '(…)') }}</pre>
+    {% else %}
+        <p style="margin: 0">{{ entry[field.name]|truncate(40, false, '(…)') }}</p>
+    {% endif %}
+{%- endmacro -%}
