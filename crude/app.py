@@ -25,10 +25,14 @@ def inject_default_render_context():
     return {'model_names': model_names, 'now': datetime.utcnow(), 'render_tag': render_tag, 'render_entry': render_entry}
 
 
-# add a route for the root URL
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('unique/404.html'), 404
+
+
 @app.route('/')
 def index():
-    return render_template('login.html')
+    return render_template('unique/login.html')
 
 
 if __name__ == '__main__':

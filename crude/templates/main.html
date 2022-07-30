@@ -50,7 +50,7 @@
           {% endblock %}
     </footer>
     <!-- hidden stuff -->
-    <command-line data-list="models"></command-line>
+    <command-line style="display:none" data-list="models"></command-line>
     <datalist id="models">
         {% for loop_model_name in model_names %}
             <option value="{{ loop_model_name }}">{{ loop_model_name }}</option>

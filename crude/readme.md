@@ -22,7 +22,7 @@ Features
 
 BUGFIX
 ======
- - Pressing "e" while on a "read" page and the CLI is open will change the page
+ -
 
 Use-cases
 =========

@@ -12,6 +12,7 @@ class Console extends HTMLElement {
             matchList: this.shadowRoot.getElementById('matchlist'),
             input: undefined
         };
+        this.globalEventListeners = [];
         this.lastSearchTerm = undefined;
         this.selectedIndex = undefined;
         this.lastNavigationSearchTerm = undefined;
@@ -21,7 +22,6 @@ class Console extends HTMLElement {
         this.autoCompleteTimeoutId = undefined;
         this.modelNames = [];
         this.currentSearchResults = {};
-        this.hideCmdLine();
         this.loadModelNames();
     }
     connectedCallback() {
@@ -291,6 +291,7 @@ class Console extends HTMLElement {
     }
 
     showCmdLine() {
+        removeQuickKeys();
         this.style.display = 'block';
         this.shadowRoot.getElementById('command-line').focus();
     }
@@ -302,6 +303,7 @@ class Console extends HTMLElement {
             this.domNodes.input.focus();
             this.domNodes.input = undefined;
         }
+        attachQuickKeys();
     }
     getTemplate() {
         const template = document.createElement('template');

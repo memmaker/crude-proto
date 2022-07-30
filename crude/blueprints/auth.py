@@ -23,7 +23,7 @@ else:
 
 @auth_blueprint.route('/login', methods=['GET'])
 def login():
-    return render_template('login.html')
+    return render_template('unique/login.html')
 
 
 @auth_blueprint.route('/logout', methods=['GET'])
