@@ -20,6 +20,11 @@ Features
  - Supports required fields
  - Drop in custom fields
 
+
+Todo
+====
+
+Branch for enum
 BUGFIX
 ======
  -
@@ -43,8 +48,20 @@ Clients
 
 Out of Scope
 ============
- - SSL / TLS                (use a reverse proxy)
- - Special Field Types      (these are too use-case specific)
+ - SSL / TLS                            (use a reverse proxy)
+ - Special Field Types                  (these are too use-case specific)
+ - Display Names for Field or Models    (a client should allow for this=
+
+Thoughts on Logic and UI
+========================
+
+Logic could reside completely on the client side and just use crude for reading and writing to the database.
+Logic could be implemented in a naked objects/functions pattern.
+
+
+UI could ke keyboard oriented, trying to mimic text based mainframe interfaces.
+UI could be completely visual with a windows based UI and drag and drop.
+
 
 
 Keyboard Shortcuts

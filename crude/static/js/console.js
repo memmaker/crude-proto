@@ -40,7 +40,7 @@ class Console extends HTMLElement {
     isInputInBackground() { return this.domNodes.input !== undefined; }
     registerEventListeners() {
         var self = this;
-        document.body.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function(e) {
             // detect if control space was pressed
             if (e.keyCode === 32 && e.ctrlKey) {
                 if (self.cmdLineIsVisible()) {

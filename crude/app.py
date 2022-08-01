@@ -17,7 +17,11 @@ app.register_blueprint(auth_blueprint)
 app.secret_key = 'something unique and secret'
 CORS(app)
 CSRFProtect(app)
-
+app.config.update(
+    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE=None,
+)
 
 @app.context_processor
 def inject_default_render_context():
