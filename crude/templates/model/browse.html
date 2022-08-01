@@ -2,6 +2,7 @@
 {% block title %}Create{% endblock %}
 {% block content %}
     <h1>List Models</h1>
+    <a href="{{ url_for('model.export') }}">Export</a>
     <a href="{{ url_for('model.edit') }}">Create</a>
     <table>
         <thead><tr><th>Name</th><th>Actions</th></tr></thead>

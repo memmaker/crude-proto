@@ -24,6 +24,7 @@ Features
 Todo
 ====
  - Simple way to add timestamps
+ - Allow export of the complete datamodel
 
 BUGFIX
 ======

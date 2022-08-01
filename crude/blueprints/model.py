@@ -102,3 +102,16 @@ def browse():
     render_context = {'models': models}
     return render_template('model/browse.html', **render_context)
 
+
+@model_blueprint.route('/export', methods=['GET'])
+@auth_required
+def export():
+    models = db().list_models()
+    list_of_models = []
+    for model in models:
+        if model and '_id' in model:
+            del model['_id']
+        list_of_models.append(model)
+    render_context = {'model': json.dumps(list_of_models, indent=4)}
+    return render_template('model/export.html', **render_context)
+
