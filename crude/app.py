@@ -23,6 +23,7 @@ app.config.update(
     SESSION_COOKIE_SAMESITE=None,
 )
 
+
 @app.context_processor
 def inject_default_render_context():
     model_names = db().get_all_model_names()

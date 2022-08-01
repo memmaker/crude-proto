@@ -1,0 +1,15 @@
+{% macro render_edit_field(field, entry, autofocus) -%}
+    <select name="{{ field.name }}" id="{{ field.name }}" {% if autofocus %} autofocus {% endif %}>
+      {% for option in field.options %}
+        <option value="{{ option }}" {% if option.value == entry[field.name] %} selected {% endif %}>{{ option }}</option>
+      {% endfor %}
+    </select>
+{%- endmacro -%}
+
+{% macro render_read_field(field, entry) -%}
+    <span class="field-value">{{ entry[field.name] }}</span>
+{%- endmacro -%}
+
+{% macro render_list_field(field, entry) -%}
+    <span class="field-value">{{ entry[field.name] }}</span>
+{%- endmacro -%}

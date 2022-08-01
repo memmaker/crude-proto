@@ -62,7 +62,6 @@ def render_entry(model, entry):
 
 
 def render_template_from_string(template_string, render_context):
-    print(template_string)
     rtemplate = Environment().from_string(template_string)
     return rtemplate.render(**render_context)
 

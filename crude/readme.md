@@ -23,8 +23,8 @@ Features
 
 Todo
 ====
+ - Simple way to add timestamps
 
-Branch for enum
 BUGFIX
 ======
  -

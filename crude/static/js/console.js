@@ -291,7 +291,9 @@ class Console extends HTMLElement {
     }
 
     showCmdLine() {
-        removeQuickKeys();
+        if (typeof removeQuickKeys === 'function') {
+            removeQuickKeys();
+        }
         this.style.display = 'block';
         this.shadowRoot.getElementById('command-line').focus();
     }
@@ -303,7 +305,9 @@ class Console extends HTMLElement {
             this.domNodes.input.focus();
             this.domNodes.input = undefined;
         }
-        attachQuickKeys();
+        if (typeof attachQuickKeys === 'function') {
+            attachQuickKeys();
+        }
     }
     getTemplate() {
         const template = document.createElement('template');
